@@ -10,4 +10,19 @@
             (default, #{username}, #{password}, #{name}, #{email}, now(), now())
     </insert>
 
+    <select id="selectAll" resultType="User">
+        select
+            id,
+            username,
+            password,
+            name,
+            email,
+            created_at,
+            updated_at
+        from
+            users
+        order by
+            id
+    </select>
+
 </mapper>

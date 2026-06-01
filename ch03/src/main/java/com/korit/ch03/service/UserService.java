@@ -7,6 +7,8 @@ import com.korit.ch03.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -30,4 +32,25 @@ public class UserService {
                 .build();
     }
 
+    public List<UserResp> getAll() {
+        List<User> users = userMapper.selectAll();
+        return users.stream()
+                .map(user -> UserResp.builder()
+                    .id(user.getId())
+                    .username(user.getUsername())
+                    .name(user.getName())
+                    .email(user.getEmail())
+                    .build())
+                .toList();
+    }
+
 }
+
+
+
+
+
+
+
+
+
