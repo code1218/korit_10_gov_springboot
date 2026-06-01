@@ -3,8 +3,11 @@ package com.korit.ch03.service;
 import com.korit.ch03.common.exception.DuplicatedException;
 import com.korit.ch03.controller.user.dto.UserReqCreate;
 import com.korit.ch03.controller.user.dto.UserResp;
+import com.korit.ch03.entity.Role;
 import com.korit.ch03.entity.User;
+import com.korit.ch03.entity.UserRole;
 import com.korit.ch03.mapper.UserMapper;
+import com.korit.ch03.mapper.UserRoleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserMapper userMapper;
+    private final UserRoleMapper userRoleMapper;
 
     public UserResp create(UserReqCreate dto) {
         User foundUser = userMapper.selectByUsername(dto.getUsername());
@@ -30,6 +34,13 @@ public class UserService {
                 .build();
 
         userMapper.insert(newUser);
+
+        UserRole userRole = UserRole.builder()
+                .userId(newUser.getId())
+                .roleId(1l)
+                .build();
+
+        userRoleMapper.insert(userRole);
 
         return UserResp.builder()
                 .id(newUser.getId())
@@ -59,6 +70,12 @@ public class UserService {
                 .username(user.getUsername())
                 .name(user.getName())
                 .email(user.getEmail())
+                .roles(user.getUserRoles().stream()
+                        .map(userRole -> {
+                            Role role = userRole.getRole();
+                            return new UserResp.Role(role.getId(), role.getRoleName());
+                        })
+                        .toList())
                 .build();
     }
 

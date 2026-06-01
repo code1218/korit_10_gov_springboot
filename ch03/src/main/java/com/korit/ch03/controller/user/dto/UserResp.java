@@ -1,11 +1,13 @@
 package com.korit.ch03.controller.user.dto;
 
+import com.korit.ch03.controller.role.dto.RoleResp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,4 +18,12 @@ public class UserResp {
     private String username;
     private String name;
     private String email;
+    private List<UserResp.Role> roles;
+
+    @Data
+    @AllArgsConstructor
+    public static class Role {
+        private Long roleId;
+        private String roleName;
+    }
 }
