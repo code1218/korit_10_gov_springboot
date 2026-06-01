@@ -11,4 +11,44 @@
         (default, #{roleName}, now(), now())
     </insert>
 
+    <select id="selectAll" resultType="Role">
+        select
+            id,
+            role_name,
+            created_at,
+            updated_at
+        from
+            roles
+        order by
+            id
+    </select>
+
+    <select id="selectById" resultType="Role">
+        select
+            id,
+            role_name,
+            created_at,
+            updated_at
+        from
+            roles
+        where
+            id = #{roleId}
+        order by
+            id
+    </select>
+
+    <select id="selectByRoleName" resultType="Role">
+        select
+            id,
+            role_name,
+            created_at,
+            updated_at
+        from
+            roles
+        where
+            role_name = #{roleName}
+        order by
+            id
+    </select>
+
 </mapper>

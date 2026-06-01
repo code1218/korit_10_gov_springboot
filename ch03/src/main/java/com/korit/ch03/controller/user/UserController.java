@@ -18,7 +18,8 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<ApiResponse<UserResp>> create(@RequestBody UserReqCreate dto) {
-        return ResponseEntity.ok(ApiResponse.ok(userService.create(dto)));
+        UserResp userResp = userService.create(dto);
+        return ResponseEntity.ok(ApiResponse.ok(userResp));
     }
 
     // 다건(전체)
@@ -30,7 +31,7 @@ public class UserController {
     // 단건
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResponse<UserResp>> getOne(@PathVariable Long userId) {
-        return ResponseEntity.ok(ApiResponse.ok());
+        return ResponseEntity.ok(ApiResponse.ok(userService.getOne(userId)));
     }
 
 }

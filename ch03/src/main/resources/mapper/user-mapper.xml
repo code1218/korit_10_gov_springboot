@@ -25,4 +25,38 @@
             id
     </select>
 
+    <select id="selectById" resultType="User">
+        select
+            id,
+            username,
+            password,
+            name,
+            email,
+            created_at,
+            updated_at
+        from
+            users
+        where
+            id = #{userId}
+        order by
+            id
+    </select>
+
+    <select id="selectByUsername" resultType="User">
+        select
+            id,
+            username,
+            password,
+            name,
+            email,
+            created_at,
+            updated_at
+        from
+            users
+        where
+            username = #{username}
+        order by
+            id
+    </select>
+
 </mapper>
