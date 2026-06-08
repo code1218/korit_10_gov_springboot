@@ -4,7 +4,6 @@ import { useAuthStore } from "../store/authStore";
 function ProtectedRoutes() {
     const accessToken = useAuthStore((state) => state.accessToken);
     const isLoggedIn = !!accessToken;
-    console.log(isLoggedIn)
 
     if (!isLoggedIn) {
         return <Navigate to={"/auth/signin"} replace={true} />

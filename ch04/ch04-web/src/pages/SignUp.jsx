@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { useSignUp } from "../hooks/useAuth";
+import AuthLayout from "../components/ui/AuthLayout";
+import GlassCardComponent, { CardTitle, InputGroup, StyledInput, ErrorText, StyledButton, LinkText } from "../components/ui/GlassCard";
 
 function SignUp() {
     const REGEX = {
@@ -38,8 +40,8 @@ function SignUp() {
         }));
     }
 
-    const handleSignUpOnClick = () => {
-        
+    const handleSignUpOnClick = async () => {
+        await signUpMutation.mutateAsync(inputValues);
         setInputValues(emptyInputs);
     }
 
@@ -76,35 +78,35 @@ function SignUp() {
     }, [inputErrors]);
 
     return (
-        <>
-            <h1>회원가입</h1>
-            <ul>
-                <Link to={"/auth/signin"}>로그인</Link>
-            </ul>
-            <div>
-                <input type="text" name="username" placeholder="사용자이름" value={inputValues.username} onChange={handleInputOnChange} />
-                <div>{inputErrors.username}</div>
-            </div>
-            <div>
-                <input type="password" name="password" placeholder="비밀번호" value={inputValues.password} onChange={handleInputOnChange} />
-                <div>{inputErrors.password}</div>
-            </div>
-            <div>
-                <input type="password" name="confirmPassword" placeholder="비밀번호 확인" value={inputValues.confirmPassword} onChange={handleInputOnChange} />
-                <div>{inputErrors.confirmPassword}</div>
-            </div>
-            <div>
-                <input type="text" name="name" placeholder="이름" value={inputValues.name} onChange={handleInputOnChange} />
-                <div>{inputErrors.name}</div>
-            </div>
-            <div>
-                <input type="text" name="email" placeholder="이메일" value={inputValues.email} onChange={handleInputOnChange} />
-                <div>{inputErrors.email}</div>
-            </div>
-            <div>
-                <button disabled={signUpDisabled} onClick={handleSignUpOnClick}>가입하기</button>
-            </div>
-        </>
+        <AuthLayout>
+            <GlassCardComponent>
+                <CardTitle>SIGN UP</CardTitle>
+                <InputGroup>
+                    <StyledInput type="text" name="username" placeholder="사용자이름" value={inputValues.username} onChange={handleInputOnChange} />
+                    <ErrorText>{inputErrors.username}</ErrorText>
+                </InputGroup>
+                <InputGroup>
+                    <StyledInput type="password" name="password" placeholder="비밀번호" value={inputValues.password} onChange={handleInputOnChange} />
+                    <ErrorText>{inputErrors.password}</ErrorText>
+                </InputGroup>
+                <InputGroup>
+                    <StyledInput type="password" name="confirmPassword" placeholder="비밀번호 확인" value={inputValues.confirmPassword} onChange={handleInputOnChange} />
+                    <ErrorText>{inputErrors.confirmPassword}</ErrorText>
+                </InputGroup>
+                <InputGroup>
+                    <StyledInput type="text" name="name" placeholder="이름" value={inputValues.name} onChange={handleInputOnChange} />
+                    <ErrorText>{inputErrors.name}</ErrorText>
+                </InputGroup>
+                <InputGroup>
+                    <StyledInput type="text" name="email" placeholder="이메일" value={inputValues.email} onChange={handleInputOnChange} />
+                    <ErrorText>{inputErrors.email}</ErrorText>
+                </InputGroup>
+                <StyledButton disabled={signUpDisabled} onClick={handleSignUpOnClick}>가입하기</StyledButton>
+                <LinkText>
+                    이미 계정이 있으신가요? <Link to={"/auth/signin"}>로그인</Link>
+                </LinkText>
+            </GlassCardComponent>
+        </AuthLayout>
     )
 }
 

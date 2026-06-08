@@ -2,19 +2,19 @@ import { axiosInstance } from "./axiosInstance"
 
 // 회원가입
 export const signUp = async (signUpData) => {
-    const response = await axiosInstance.post("/auth/users", signUpData);
+    const response = await axiosInstance.post("/api/auth/users", {...signUpData, roleId: 1});
     return response.data;
 }
 
 // 로그인
 export const signIn = async (signInData) => {
-    const response = await axiosInstance.post("/auth/token", signInData);
+    const response = await axiosInstance.post("/api/auth/users/token", signInData);
     return response.data;
 }
 
 // 로그아웃
 export const logout = async () => {
-    await axiosInstance.post("/auth/logout");
+    await axiosInstance.post("/api/auth/logout");
 }
 
 // 사용자정보 조회
