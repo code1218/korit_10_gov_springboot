@@ -12,21 +12,20 @@ const useAuthStore = create(
     (set) => ({
       isAuthenticated: false,
       user: null,
+      accessToken: null,
 
       // TODO: 실제 OAuth2 흐름으로 교체
       login: (provider) => {
-        set({
-          isAuthenticated: true,
-          user: {
-            name: '사용자',
-            email: 'user@example.com',
-            provider,
-          },
-        });
+        window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
       },
 
       logout: () => {
-        set({ isAuthenticated: false, user: null });
+        set({ isAuthenticated: false, user: null, accessToken: null });
+      },
+
+      setAccessToken: (accessToken) => {
+        localStorage.setItem("accessToken", accessToken);
+        set({ accessToken, isAuthenticated: true });
       },
     }),
     {
@@ -34,6 +33,7 @@ const useAuthStore = create(
       partialize: (state) => ({
         isAuthenticated: state.isAuthenticated,
         user: state.user,
+        accessToken: state.accessToken,
       }),
     }
   )
