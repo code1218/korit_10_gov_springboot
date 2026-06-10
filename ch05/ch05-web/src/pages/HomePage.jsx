@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
+import useAuthStore from '../store/authStore';
 import Header from '../components/organisms/Header';
 import Badge from '../components/atoms/Badge';
-import { useAuth } from '../contexts/AuthContext';
 
 /* ── 애니메이션 ─────────────────────────────────────── */
 const fadeIn = keyframes`
@@ -128,7 +128,7 @@ const providerEmoji = { google: '🔵', naver: '🟢', kakao: '🟡' };
 
 /* ── 컴포넌트 ──────────────────────────────────────── */
 export default function HomePage() {
-  const { user } = useAuth();
+  const user = useAuthStore((state) => state.user);
 
   return (
     <PageWrapper>
@@ -194,7 +194,7 @@ export default function HomePage() {
           실제 API와 연결 후 원하는 콘텐츠로 교체하세요.
           <br />
           <code style={{ color: '#6c63ff', background: 'rgba(108,99,255,0.08)', padding: '2px 6px', borderRadius: '4px' }}>
-            useAuth()
+            useAuthStore()
           </code>{' '}
           훅을 통해 현재 사용자 정보와 로그아웃 기능을 사용할 수 있습니다.
         </div>

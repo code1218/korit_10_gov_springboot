@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import useAuthStore from '../../store/authStore';
 import Logo from '../atoms/Logo';
 import Badge from '../atoms/Badge';
 import Button from '../atoms/Button';
-import { useAuth } from '../../contexts/AuthContext';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -56,7 +56,8 @@ const Avatar = styled.div`
 `;
 
 export default function Header() {
-  const { user, logout } = useAuth();
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
   const initial = user?.name?.[0]?.toUpperCase() || 'U';
 
   return (

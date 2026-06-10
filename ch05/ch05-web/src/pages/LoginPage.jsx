@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router';
-import { useAuth } from '../contexts/AuthContext';
+import useAuthStore from '../store/authStore';
 import LoginCard from '../components/organisms/LoginCard';
 
-/* ── 배경 장식 원형 ──────────────────────────────────── */
+/* ── 배경 광원 효과 ──────────────────────────────────── */
 const PageWrapper = styled.div`
   min-height: 100vh;
   display: flex;
@@ -14,7 +14,6 @@ const PageWrapper = styled.div`
   position: relative;
   overflow: hidden;
 
-  /* 배경 광원 효과 */
   &::before {
     content: '';
     position: absolute;
@@ -64,14 +63,14 @@ const WelcomeText = styled.p`
 `;
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
 
   // 소셜 로그인 버튼 클릭 핸들러
   // 실제 OAuth2 흐름은 여기에 구현하세요
   const handleLogin = (provider) => {
     // TODO: 실제 OAuth2 redirect URL로 교체
-    login(provider); // mock: 바로 인증 처리
+    login(provider); // mock: store에 바로 인증 처리
     navigate('/');
   };
 
