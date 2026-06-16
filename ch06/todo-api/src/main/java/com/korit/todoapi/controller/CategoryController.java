@@ -1,5 +1,7 @@
 package com.korit.todoapi.controller;
 
+import com.korit.todoapi.service.CategoryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,12 +11,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/categories")
+@RequiredArgsConstructor
 public class CategoryController {
+    private final CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<?> get(@AuthenticationPrincipal Long userId) {
-//        Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return ResponseEntity.ok("카테고리 가지고 나감, userId: " + userId);
+    @GetMapping("/count/completion/not")
+    public ResponseEntity<?> notCompleted(@AuthenticationPrincipal Long userId) {
+        return ResponseEntity.ok(null);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
