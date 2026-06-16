@@ -6,10 +6,11 @@
 <mapper namespace="com.korit.todoapi.mapper.TodoMapper">
 
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into todos values
             (default, #{userId}, #{categoryId}, #{title}, #{memo}, #{dueDate}, #{dueTime}, #{priority}, #{isFlagged}, #{isCompleted}, #{completedAt}, #{createdAt}, #{updatedAt})
     </insert>
+
     <update id="update">
         update
             todos
