@@ -16,4 +16,4 @@ export const useAuthStore = create((set) => ({
     get isLoggedIn() {
         return !!this.accessToken;
     }
-}))
+}));
