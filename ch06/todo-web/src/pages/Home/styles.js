@@ -1,6 +1,8 @@
 import { css } from "@emotion/react";
 
 export const layout = css`
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
 `;
 
@@ -20,4 +22,52 @@ export const profile = (url) => css`
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
+`;
+
+export const main = css`
+    box-sizing: border-box;
+    padding: 20px 16px 24px;
+    flex-grow: 1;
+`;
+
+export const boxGroup = css`
+    height: 212px;
+    margin-bottom: 28px;
+`;
+
+export const listGroup = css`
+
+    & > header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2px;
+        margin-bottom: 10px;
+
+        & > h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+    }
+
+    & > ul {
+        box-shadow: #0000000f 0px 1px 4px;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        border-radius: 14px;
+        overflow: hidden;
+
+        & > li {
+            box-sizing: border-box;
+            padding: 13px 16px;
+            height: 60px;
+            background-color: #ffffff;
+            cursor: pointer;
+        }
+
+        & > li:not(li:nth-last-child(1)) {
+            border-bottom: 1px solid #f5f5f7;
+            height: 61px;
+        }
+    }
 `;

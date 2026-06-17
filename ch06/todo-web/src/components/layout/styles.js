@@ -37,5 +37,5 @@ export const main = css`
     display: flex;
     width: 100%;
     flex-grow: 1;
-    background-color: #dbdbdb;
+    background-color: #f2f2f7;
 `;
