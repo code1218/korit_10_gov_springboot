@@ -5,12 +5,12 @@ function Login() {
     const baseUrl = "http://localhost:8080/oauth2/authorization";
 
     return (
-        <>
+        <div css={s.layout}>
             <h1>로그인</h1>
             <Link to={`${baseUrl}/google`} >google login</Link>
             <Link to={`${baseUrl}/naver`} >naver login</Link>
             <Link to={`${baseUrl}/kakao`} >kakao login</Link>
-        </>
+        </div>
     )
 }
 
