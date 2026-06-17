@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import * as s from "./styles";
+import { useSpinnersStore } from "../../store/spinners";
+import Spinners from "../Spinners/Spinners";
 
 function RootLayout({ children }) {
+    const isLoading = useSpinnersStore((state) => state.isLoading);
+
     const [ time, setTime ] = useState("00:00");
 
     useEffect(() => {
@@ -40,7 +44,10 @@ function RootLayout({ children }) {
                     </svg>
                 </div>
             </header>
-            {children}
+            <div css={s.main}>
+                {isLoading && <Spinners />}
+                {children}
+            </div>
         </div>
     )
 }
