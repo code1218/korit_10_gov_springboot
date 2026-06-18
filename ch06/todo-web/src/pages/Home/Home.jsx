@@ -5,11 +5,14 @@ import Spinners from "../../components/Spinners/Spinners";
 import { useCategories, useCategoryNotCompletedCount } from "../../hooks/queries/useCategory";
 import { useMe } from "../../hooks/queries/useUser";
 import * as s from "./styles";
+import { useBottomModalStore } from "../../store/modalStore";
 
 function Home() {
     const meQuery = useMe();
     const categoiesQuery = useCategories();
     const categoryNotCompletedCountQuery = useCategoryNotCompletedCount();
+
+    const setModalOpen = useBottomModalStore((state) => state.setOpen);
 
     console.log(categoiesQuery.data);
 
@@ -53,7 +56,7 @@ function Home() {
                             ))
                         }
                     </ul>
-                    <TextButton>새로운 목록 추가</TextButton>
+                    <TextButton onClick={() => setModalOpen(true)}>새로운 목록 추가</TextButton>
                 </div>
             </div>
         </div>
