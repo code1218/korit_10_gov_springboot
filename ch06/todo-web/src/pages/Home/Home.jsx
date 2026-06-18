@@ -2,10 +2,11 @@ import { Link } from "react-router";
 import TextButton from "../../components/buttons/TextButton/TextButton";
 import Header from "../../components/Header/Header";
 import Spinners from "../../components/Spinners/Spinners";
-import { useCategories, useCategoryNotCompletedCount } from "../../hooks/queries/useCategory";
+import { useCategories, useCategoryColorsAndIcons, useCategoryNotCompletedCount } from "../../hooks/queries/useCategory";
 import { useMe } from "../../hooks/queries/useUser";
 import * as s from "./styles";
 import { useBottomModalStore } from "../../store/modalStore";
+import { useState } from "react";
 
 function Home() {
     const meQuery = useMe();
@@ -13,8 +14,12 @@ function Home() {
     const categoryNotCompletedCountQuery = useCategoryNotCompletedCount();
 
     const setModalOpen = useBottomModalStore((state) => state.setOpen);
+    const setModalChildren = useBottomModalStore((state) => state.setChildren);
 
-    console.log(categoiesQuery.data);
+    const handleCategoryRegisterOnClick = () => {
+        setModalOpen(true);
+        setModalChildren(<CategoryRegister />);
+    }
 
     return (
         <div css={s.layout}>
@@ -56,7 +61,7 @@ function Home() {
                             ))
                         }
                     </ul>
-                    <TextButton onClick={() => setModalOpen(true)}>새로운 목록 추가</TextButton>
+                    <TextButton onClick={handleCategoryRegisterOnClick}>새로운 목록 추가</TextButton>
                 </div>
             </div>
         </div>
@@ -64,3 +69,49 @@ function Home() {
 }
 
 export default Home;
+
+function CategoryRegister() {
+    const colorsAndIconsQuery = useCategoryColorsAndIcons();
+    const [ newCategory, setNewCategory ] = useState({
+        name: "",
+        colorId: 1,
+        iconId: 1,
+    });
+    const colors = colorsAndIconsQuery.data?.body.categoryColors ?? [];
+    const icons = colorsAndIconsQuery.data?.body.categoryIcons ?? [];
+
+    const selected = {
+        color: colors.find(c => c.id === newCategory.colorId)?.color,
+        icon: icons.find(i => i.id === newCategory.iconId)?.icon,
+    }
+
+    return <div>
+        <header>
+            <h3>새로운 목록</h3>
+            <div css={s.categoryIcon(selected.color)}>{selected.icon}</div>
+        </header>
+        <div>
+            <input type="text" />
+        </div>
+        <div>
+            {
+                colors.map(c => (
+                    <label key={c.id}>
+                        <input type="radio" />
+                        {c.color}
+                    </label>
+                ))
+            }
+        </div>
+        <div>
+            {
+                icons.map(i => (
+                    <label key={i.id}>
+                        <input type="radio" />
+                        {i.icon}
+                    </label>
+                ))
+            }
+        </div>
+    </div>
+}

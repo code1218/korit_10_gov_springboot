@@ -5,7 +5,14 @@ export const useBottomModalStore = create((set) => ({
     children: null,
 
     setOpen: (state) => {
-        set({ isOpen: state });
+        if (state) {
+            set({ isOpen: true });
+        } else {
+            set({ 
+                isOpen: false,
+                children: null,
+            });
+        }
     },
 
     setChildren: (state) => {
