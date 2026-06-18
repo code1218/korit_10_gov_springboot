@@ -1,12 +1,15 @@
 import TextButton from "../../components/buttons/TextButton/TextButton";
 import Header from "../../components/Header/Header";
+import Spinners from "../../components/Spinners/Spinners";
+import { useCategories } from "../../hooks/queries/useCategory";
 import { useMe } from "../../hooks/queries/useUser";
 import * as s from "./styles";
 
 function Home() {
     const meQuery = useMe();
+    const categoiesQuery = useCategories();
 
-    console.log(meQuery.data.body.profileImage)
+    console.log(categoiesQuery.data);
 
     return (
         <div css={s.layout}>
@@ -24,10 +27,13 @@ function Home() {
                         <TextButton>편집</TextButton>
                     </header>
                     <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        {
+                            categoiesQuery.isLoading
+                            ? <></>
+                            : categoiesQuery.data.body.map(category => (
+                                <li>{category.categoryIcon}{category.categoryName}</li>
+                            ))
+                        }
                     </ul>
                 </div>
             </div>
