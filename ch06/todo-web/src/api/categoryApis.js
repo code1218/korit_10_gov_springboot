@@ -17,3 +17,12 @@ export const getCategoryColorsAndIcons = async () => {
         return error.response.data;
     }
 }
+
+export const getNotCompletedCount = async () => {
+    try {
+        const response = await axiosInstance.get("/api/categories/count/completion/not");
+        return response.data;
+    } catch(error) {
+        return error.response.data;
+    }
+}
