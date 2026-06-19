@@ -7,6 +7,7 @@ import { useMe } from "../../hooks/queries/useUser";
 import * as s from "./styles";
 import { useBottomModalStore } from "../../store/modalStore";
 import { useState } from "react";
+import { useCategoryRegisterMutation } from "../../hooks/mutations/useCategory";
 
 function Home() {
     const meQuery = useMe();
@@ -15,6 +16,12 @@ function Home() {
 
     const setModalOpen = useBottomModalStore((state) => state.setOpen);
     const setModalChildren = useBottomModalStore((state) => state.setChildren);
+
+    const [ isEdit, setEdit ] = useState(false);
+
+    const handleChangeModeOnClick = (state) => {
+        setEdit(state);
+    }
 
     const handleCategoryRegisterOnClick = () => {
         setModalOpen(true);
@@ -31,10 +38,14 @@ function Home() {
                 <div css={s.boxGroup}>
 
                 </div>
-                <div css={s.listGroup}>
+                <div css={s.listGroup(isEdit)}>
                     <header>
                         <h3>나의 목록</h3>
-                        <TextButton>편집</TextButton>
+                        {
+                            isEdit 
+                            ? <TextButton onClick={() => handleChangeModeOnClick(false)}>완료</TextButton>
+                            : <TextButton onClick={() => handleChangeModeOnClick(true)}>편집</TextButton>
+                        }
                     </header>
                     <ul>
                         {
@@ -42,6 +53,11 @@ function Home() {
                             ? <></>
                             : categoiesQuery.data.body.map(category => (
                                 <li key={category.categoryId}>
+                                    <div>
+                                        <div>
+                                            <svg data-dc-tpl="122" width="10" height="2" viewBox="0 0 10 2" fill="none"><rect data-dc-tpl="123" width="10" height="2" rx="1" fill="white"></rect></svg>
+                                        </div>
+                                    </div>
                                     <Link to={`/categories/${category.categoryName}/todos`}>
                                         <div css={s.categoryIcon(category.categoryColor)}>{category.categoryIcon}</div>
                                         <div css={s.categoryName}>{category.categoryName}</div>
@@ -72,6 +88,9 @@ export default Home;
 
 function CategoryRegister() {
     const colorsAndIconsQuery = useCategoryColorsAndIcons();
+    const setModalOpen = useBottomModalStore((state) => state.setOpen);
+    const meQuery = useMe();
+    const categoryRegisterMutation = useCategoryRegisterMutation();
     const [ newCategory, setNewCategory ] = useState({
         categoryName: "",
         colorId: 1,
@@ -99,6 +118,17 @@ function CategoryRegister() {
         }))
     }
 
+    const handleRegisterOnClick = () => {
+        const data = {
+            userId: meQuery.data.body.userId,
+            name: newCategory.categoryName,
+            colorId: newCategory.colorId,
+            iconId: newCategory.iconId,
+        }
+        categoryRegisterMutation.mutateAsync(data);
+        setModalOpen(false);
+    }
+
     return <div>
         <header css={s.modalHeader}>
             <h3>새로운 목록</h3>
@@ -119,6 +149,7 @@ function CategoryRegister() {
                     <label key={c.id} css={s.categoryColorLabel(c.color)}>
                         <input type="radio" 
                             name="colorId" 
+                            checked={c.color === selected.color}
                             onChange={(e) => handleRadioOnChange(e, c.id)} />
                         <div></div>
                     </label>
@@ -132,11 +163,16 @@ function CategoryRegister() {
                     <label key={i.id} css={s.categoryIconLabel}>
                         <input type="radio" 
                             name="iconId" 
+                            checked={i.icon === selected.icon}
                             onChange={(e) => handleRadioOnChange(e, i.id)} />
                         <div>{i.icon}</div>
                     </label>
                 ))
             }
+        </div>
+        <div css={s.modalButtonGroup(selected.color)}>
+            <button onClick={() => setModalOpen(false)}>취소</button>
+            <button onClick={handleRegisterOnClick}>추가</button>
         </div>
     </div>
 }

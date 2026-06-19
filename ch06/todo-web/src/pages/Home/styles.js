@@ -27,7 +27,12 @@ export const profile = (url) => css`
 export const main = css`
     box-sizing: border-box;
     padding: 20px 16px 24px;
-    flex-grow: 1;
+    height: 647px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 export const boxGroup = css`
@@ -35,7 +40,7 @@ export const boxGroup = css`
     margin-bottom: 28px;
 `;
 
-export const listGroup = css`
+export const listGroup = (isEdit) => css`
 
     & > header {
         display: flex;
@@ -58,16 +63,41 @@ export const listGroup = css`
         overflow: hidden;
 
         & > li {
+            display: flex;
             box-sizing: border-box;
             padding: 13px 16px;
+            width: 100%;
             height: 60px;
             background-color: #ffffff;
             cursor: pointer;
+
+            & > div {
+                transition: all 0.3s ease-in-out;
+                transform: translateX(${isEdit ? "0%" : "-100%"});
+                display: flex;
+                flex-shrink: 0;
+                justify-content: flex-start;
+                align-items: center;
+                width: ${isEdit ? "40px" : "0px"};
+                height: 100%;
+                overflow: hidden;
+
+                & > div {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                    width: 24px;
+                    height: 24px;
+                    background-color: #ff3b30;
+                } 
+            }
 
             & > a {
                 display: flex;
                 align-items: center;
                 gap: 13px;
+                width: 100%;
                 height: 100%;
                 font-size: 17px;
                 text-decoration: none;
@@ -210,5 +240,30 @@ export const categoryIconLabel = css`
 
     & > input:checked + div {
         background-color: #007aff1f;
+    }
+`;
+
+export const modalButtonGroup = (color) => css`
+    display: flex;
+    gap: 10px;
+    padding: 4px 16px 30px;
+
+    & > button {
+        flex-grow: 1;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 14px;
+        padding: 15px;
+        height: 49px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1c1c1e;
+        background-color: #f2f2f7;
+        cursor: pointer;
+    }
+
+    & > button:nth-of-type(2) {
+        color: #ffffff;
+        background-color: ${color};
     }
 `;
