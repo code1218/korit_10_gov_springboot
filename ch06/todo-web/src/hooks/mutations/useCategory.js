@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { registerCategory } from "../../api/categoryApis"
+import { deleteCategory, registerCategory } from "../../api/categoryApis"
 
 export const useCategoryRegisterMutation = () => {
     const queryClient = useQueryClient();
@@ -19,6 +19,17 @@ export const useCategoryRegisterMutation = () => {
     })
 }
 
-export const useCategoryDeleteMutation = () => {
-    
+export const useCategoryDeleteMutation = (id) => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (id) => deleteCategory(id),
+        onSuccess: (response) => {
+            queryClient.invalidateQueries(["categories"]);
+            queryClient.invalidateQueries(["categoryNotCompletedCount"]);
+        }, 
+        onError: (error) => {
+            alert(error.message);
+        }
+    })
 }

@@ -7,12 +7,13 @@ import { useMe } from "../../hooks/queries/useUser";
 import * as s from "./styles";
 import { useBottomModalStore } from "../../store/modalStore";
 import { useState } from "react";
-import { useCategoryRegisterMutation } from "../../hooks/mutations/useCategory";
+import { useCategoryDeleteMutation, useCategoryRegisterMutation } from "../../hooks/mutations/useCategory";
 
 function Home() {
     const meQuery = useMe();
     const categoiesQuery = useCategories();
     const categoryNotCompletedCountQuery = useCategoryNotCompletedCount();
+    const categoryDeleteMutation = useCategoryDeleteMutation();
 
     const setModalOpen = useBottomModalStore((state) => state.setOpen);
     const setModalChildren = useBottomModalStore((state) => state.setChildren);
@@ -26,6 +27,10 @@ function Home() {
     const handleCategoryRegisterOnClick = () => {
         setModalOpen(true);
         setModalChildren(<CategoryRegister />);
+    }
+
+    const handleCategoryDeleteOnClick = (e, id) => {
+        categoryDeleteMutation.mutateAsync(id);
     }
 
     return (
@@ -53,7 +58,7 @@ function Home() {
                             ? <></>
                             : categoiesQuery.data.body.map(category => (
                                 <li key={category.categoryId}>
-                                    <div>
+                                    <div onClick={(e) => handleCategoryDeleteOnClick(e, category.categoryId)}>
                                         <div>
                                             <svg data-dc-tpl="122" width="10" height="2" viewBox="0 0 10 2" fill="none"><rect data-dc-tpl="123" width="10" height="2" rx="1" fill="white"></rect></svg>
                                         </div>
@@ -67,7 +72,7 @@ function Home() {
                                                     categoryNotCompletedCountQuery.isLoading || 
                                                     categoryNotCompletedCountQuery.data.body
                                                     .find(count => count.id === category.categoryId)
-                                                    .notCompletedCount || "0"
+                                                    ?.notCompletedCount || "0"
                                                 }
                                             </span>
                                             <svg data-dc-tpl="128" width="8" height="13" viewBox="0 0 8 13" fill="none" style={{"margin-left": "4px"}}><path data-dc-tpl="129" d="M1 1l6 5.5L1 12" stroke="#C7C7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>

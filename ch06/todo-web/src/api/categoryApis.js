@@ -36,6 +36,11 @@ export const registerCategory = async (data) => {
     }
 }
 
-export const deleteCategory = () => {
-    
+export const deleteCategory = async (id) => {
+    try {
+        const response = await axiosInstance.delete(`/api/categories/${id}`);
+        return response.data;
+    } catch(error) {
+        return error.response.data;
+    }
 }
