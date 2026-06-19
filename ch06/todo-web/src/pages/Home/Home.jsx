@@ -73,7 +73,7 @@ export default Home;
 function CategoryRegister() {
     const colorsAndIconsQuery = useCategoryColorsAndIcons();
     const [ newCategory, setNewCategory ] = useState({
-        name: "",
+        categoryName: "",
         colorId: 1,
         iconId: 1,
     });
@@ -85,30 +85,55 @@ function CategoryRegister() {
         icon: icons.find(i => i.id === newCategory.iconId)?.icon,
     }
 
+    const handleInputOnChange = (e) => {
+        setNewCategory(prev => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }))
+    }
+
+    const handleRadioOnChange = (e, id) => {
+        setNewCategory(prev => ({
+            ...prev,
+            [e.target.name]: id,
+        }))
+    }
+
     return <div>
-        <header>
+        <header css={s.modalHeader}>
             <h3>새로운 목록</h3>
             <div css={s.categoryIcon(selected.color)}>{selected.icon}</div>
         </header>
-        <div>
-            <input type="text" />
+        <div css={s.modalInput}>
+            <svg data-dc-tpl="312" width="16" height="16" viewBox="0 0 16 16" fill="none"><path data-dc-tpl="313" d="M2 8h12M2 4.5h12M2 11.5h8" stroke="#8E8E93" stroke-width="1.8" stroke-linecap="round"></path></svg>
+            <input type="text" 
+                placeholder="목록 이름" 
+                name="categoryName" 
+                value={newCategory.categoryName} 
+                onChange={handleInputOnChange} />
         </div>
-        <div>
+        <div css={s.modalListTitle}>색상</div>
+        <div css={s.colorGroup}>
             {
                 colors.map(c => (
                     <label key={c.id} css={s.categoryColorLabel(c.color)}>
-                        <input type="radio" />
+                        <input type="radio" 
+                            name="colorId" 
+                            onChange={(e) => handleRadioOnChange(e, c.id)} />
                         <div></div>
                     </label>
                 ))
             }
         </div>
-        <div>
+        <div css={s.modalListTitle}>아이콘</div>
+        <div css={s.iconGroup}>
             {
                 icons.map(i => (
-                    <label key={i.id}>
-                        <input type="radio" />
-                        {i.icon}
+                    <label key={i.id} css={s.categoryIconLabel}>
+                        <input type="radio" 
+                            name="iconId" 
+                            onChange={(e) => handleRadioOnChange(e, i.id)} />
+                        <div>{i.icon}</div>
                     </label>
                 ))
             }

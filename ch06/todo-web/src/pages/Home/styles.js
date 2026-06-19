@@ -114,16 +114,101 @@ export const categoryColorLabel = (color) => css`
     width: 34px;
     height: 34px;
     background-color: ${color};
+    cursor: pointer;
 
     & > input {
         display: none;
     }
 
     & > input:checked + div {
+        position: absolute;
         box-sizing: border-box;
         border-radius: 50%;
-        border: 2px solid #e14646;
-        width: 38px;
-        height: 38px;
+        border: 3px solid #277aee;
+        width: 44px;
+        height: 44px;
     }
-`
+`;
+
+export const modalHeader = css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 16px;
+    & > h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    & > div {
+        padding-bottom: 2px;
+        width: 32px;
+        height: 32px;
+    }
+`;
+
+export const modalInput = css`
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-sizing: border-box;
+    margin: 0 16px 16px;
+    border-radius: 12px;
+    padding: 14px 16px;
+    background-color: #f2f2f7;
+
+    & > input {
+        outline: none;
+        border: none;
+        flex-grow: 1;
+        background-color: transparent;
+        font-size: 16px;
+
+        &::placeholder {
+            color: #bbbbbb;
+        }
+    }
+`;
+
+export const modalListTitle = css`
+    margin-bottom: 10px;
+    padding: 0 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8e8e93;
+`;
+
+export const colorGroup = css`
+    display: flex;
+    gap: 10px;
+    padding: 0 16px 14px;
+`;
+
+export const iconGroup = css`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 16px 14px;
+`;
+
+export const categoryIconLabel = css`
+
+    & > input {
+        display: none;
+    }
+
+    & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        width: 40px;
+        height: 40px;
+        background-color: #f2f2f7;
+        cursor: pointer;
+    }
+
+    & > input:checked + div {
+        background-color: #007aff1f;
+    }
+`;
