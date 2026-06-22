@@ -50,4 +50,97 @@ export const layout = css`
             display: none;
         }
     }
- `;
+`;
+
+export const listGroup = css`
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 12px;
+    border-radius: 14px;
+    box-shadow: #0000000f 0px 1px 4px;
+    overflow: hidden;
+
+    & > li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        box-sizing: border-box;
+        padding: 14px 16px;
+        background-color: #ffffff;
+
+        & > div:nth-of-type(2) {
+            flex-grow: 1;
+            font-size: 16px;
+        }
+
+        & > div:nth-of-type(3) {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #8e8e93;
+        }
+
+        & input {
+            border: none;
+            color: #007aff;
+            font-size: 14px;
+        }
+    }
+
+    & > li:not(li:nth-last-of-type(1)) {
+        border-bottom: 1px solid #f1f1f8;
+    } 
+`;
+
+export const iconBox = (color) => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    background-color: ${color};
+`;
+
+export const liButton = css`
+    cursor: pointer;
+`;
+
+export const categorySelectedColor = (color) => css`
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: ${color};
+`;
+
+export const toggleCheckBox = css`
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 31px;
+    width: 51px;
+    height: 31px;
+    background-color: #d1d1d6;
+
+    & > input {
+        display: none;
+    }
+
+    & > div {
+        transition: all 0.2s ease-in-out;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        border-radius: 50%;
+        width: 27px;
+        height: 27px;
+        background-color: #ffffff;
+        box-shadow: #00000033 0px 2px 6px;
+        cursor: pointer;
+    }
+
+    & > input:checked + div {
+        left: 22px;
+    }
+`;
