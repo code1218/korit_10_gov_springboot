@@ -121,7 +121,8 @@ export const toggleCheckBox = css`
     border-radius: 31px;
     width: 51px;
     height: 31px;
-    background-color: #d1d1d6;
+    overflow: hidden;
+    cursor: pointer;
 
     & > input {
         display: none;
@@ -129,18 +130,90 @@ export const toggleCheckBox = css`
 
     & > div {
         transition: all 0.2s ease-in-out;
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        border-radius: 50%;
-        width: 27px;
-        height: 27px;
-        background-color: #ffffff;
-        box-shadow: #00000033 0px 2px 6px;
-        cursor: pointer;
+        width: 100%;
+        height: 100%;
+        background-color: #d1d1d6;
+
+        & > div {
+            transition: all 0.2s ease-in-out;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            border-radius: 50%;
+            width: 27px;
+            height: 27px;
+            background-color: #ffffff;
+            box-shadow: #00000033 0px 2px 6px;
+        }
     }
 
     & > input:checked + div {
+        background-color: #34c759;
+    }
+
+    & > input:checked + div > div {
         left: 22px;
     }
+`;
+
+export const modalLayout = css`
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
+
+    & > h3 {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 10px 0 4px;
+        width: 100%;
+        font-size: 13px;
+        font-weight: 500;
+        color: #8e8e93;
+    }
+
+    & > ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+
+        & > li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-top: 1px solid #f1f1f8;
+            padding: 14px 20px;
+            cursor: pointer;
+
+            & > div:nth-of-type(2) {
+                flex-grow: 1;
+            }
+        }
+    }
+
+    & > button {
+        margin: 10px 16px 0px;
+        border: none;
+        border-radius: 14px;
+        padding: 16px;
+        font-size: 17px;
+        font-weight: 600;
+        color: #007aff;
+        cursor: pointer;
+    }
+`;
+
+export const seletedLi = (isSeleted) => css`
+    background-color: ${isSeleted ? "#007aff0f": "transparent"};
+`;
+
+export const modalListIcon = (color) => css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    background-color: ${color};
+    color: #ffffff;
 `;
