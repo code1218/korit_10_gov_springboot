@@ -17,3 +17,13 @@ export const getTodoList = async (data) => {
         return error.response.data;
     }
 }
+
+export const updateCompletion = async (data) => {
+
+    try {
+        const response = await axiosInstance.patch(`/api/todos/${data.todoId}/complete`, data);
+        return response.data;
+    } catch(error) {
+        return error.response.data;
+    }
+}

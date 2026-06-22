@@ -6,6 +6,7 @@ import { useBottomModalStore } from "../../store/modalStore";
 import * as s from "./styles";
 import { useTodoRegisterMutation } from "../../hooks/mutations/useTodo";
 import { useMe } from "../../hooks/queries/useUser";
+import { PRIORITIES } from "../../constants/globalConstants";
 
 function Register() {
     const [ todo, setTodo ] = useState({
@@ -24,33 +25,6 @@ function Register() {
     const isModalOpen = useBottomModalStore(state => state.isOpen);
     const setModalOpen = useBottomModalStore(state => state.setOpen);
     const setModalChildren = useBottomModalStore(state => state.setChildren);
-
-    const PRIORITIES = [
-        {
-            id: 1,
-            name: "없음",
-            icon: "-",
-            color: "#aeaeb2",
-        },
-        {
-            id: 2,
-            name: "낮음",
-            icon: "!",
-            color: "#34c759",
-        },
-        {
-            id: 3,
-            name: "보통",
-            icon: "!!",
-            color: "#ff9500",
-        },
-        {
-            id: 4,
-            name: "높음",
-            icon: "!!!",
-            color: "#ff3b30",
-        },
-    ];
 
     const todoRegisterMutation = useTodoRegisterMutation();
 
